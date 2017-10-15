@@ -42,8 +42,30 @@ contract Voting {
   deploy the contract to the blockchain. When we deploy the contract,
   we will pass an array of candidates who will be contesting in the election
   */
-  function Voting(bytes32[] candidateNames) {
+
+  /* When the contract is deployed on the blockchain, we will 
+  initialize the total number of tokens for sale, cost per token and
+  all the candidates
+  */
+  function Voting(uint tokens, uint pricePerToken, bytes32[] candidateNames) {
     candidateList = candidateNames;
+    totalTokens = tokens;
+    tokenPrice = pricePerToken;
+  }
+
+  /* This function is used to purchase the tokens. Note the keyword 
+  'payable' below. By just adding that one keyword to a function, 
+  your contract can now accept Ether from anyone who calls this 
+  function. Accepting money can not get any easier than this!
+  */
+  
+  function buy() payable returns (uint) {
+    uint tokensToBuy = msg.value / tokenPrice;
+    if (tokensToBuy > balanceTokens) throw;
+    voterInfo[msg.sender].voterAddress = msg.sender;
+    voterInfo[msg.sender].tokensBought += tokensToBuy;
+    balanceTokens -= tokensToBuy;
+    return tokensToBuy;
   }
 
   // This function returns the total votes a candidate has received so far
