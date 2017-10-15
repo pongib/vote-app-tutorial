@@ -10,7 +10,7 @@ contract Voting {
   struct voter {
     address voterAddress;  // The address of the voter
     uint tokensBought;  // The total no. of tokens this voter owns
-    uint[] tokenUsedPerCandidate;  // Array to keep track of votes per candidate.
+    uint[] tokensUsedPerCandidate;  // Array to keep track of votes per candidate.
 
     /* We have an array called candidateList initialized below.
      Every time this voter votes with her tokens, the value at that
@@ -26,7 +26,7 @@ contract Voting {
   and value is an unsigned integer which used to store the vote 
   count
   */
-  mapping (bytes32 => uint8) public votesReceived;
+  mapping (bytes32 => uint) public votesReceived;
   mapping (address => voter) public voterInfo;
   
   /* Solidity doesn't let you pass in an array of strings in the constructor (yet).
@@ -54,7 +54,7 @@ contract Voting {
   }
 
   // This function returns the total votes a candidate has received so far
-  function totalVotesFor(bytes32 candidate) returns (uint8) {
+  function totalVotesFor(bytes32 candidate) returns (uint) {
     if (validCandidate(candidate) == false) throw;
     return votesReceived[candidate];
   }
