@@ -50,11 +50,12 @@ contract Voting {
   function Voting(uint tokens, uint pricePerToken, bytes32[] candidateNames) {
     candidateList = candidateNames;
     totalTokens = tokens;
+    balanceTokens = tokens;
     tokenPrice = pricePerToken;
   }
 
   // This function returns the total votes a candidate has received so far
-  function totalVotesFor(bytes32 candidate) returns (uint) {
+  function totalVotesFor(bytes32 candidate) constant returns (uint) {
     if (validCandidate(candidate) == false) throw;
     return votesReceived[candidate];
   }
@@ -137,7 +138,7 @@ contract Voting {
   }
   
   // is valid candidate
-  function validCandidate(bytes32 candidate) returns (bool) {
+  function validCandidate(bytes32 candidate) constant returns (bool) {
     for (uint i = 0; i < candidateList.length; i++) {
       if (candidateList[i] == candidate) {
         return true;

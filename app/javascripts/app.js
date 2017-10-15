@@ -128,7 +128,7 @@ function populateTokenData () {
     contractInstance.totalTokens().then(function (v) {
       $('#tokens-total').html(v.toString())
     })
-    contractInstance.tokensSold.call().then(function (v) {
+    contractInstance.tokenSold.call().then(function (v) {
       $('#tokens-sold').html(v.toString())
     })
     contractInstance.tokenPrice().then(function (v) {
