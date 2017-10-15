@@ -157,6 +157,8 @@ contract Voting {
     account.transfer(this.balance);
   }
 
-  
-
+  // get all candidate list
+  function allCandidates() constant returns (bytes32[]) {
+    return candidateList;
+  }
 }
