@@ -116,7 +116,18 @@ contract Voting {
 
     return totalUsedTokens;
   }
+  
+  // find index of candidate
+  function indexOfCandidate(bytes32 candidate) constant returns (uint) {
+    for (uint i = 0; i < candidateList.length; i++) {
+      if (candidate == candidateList[i]) {
+        return i;
+      }
+    }
+    return uint(-1);
+  }
 
+  // is valid candidate
   function validCandidate(bytes32 candidate) returns (bool) {
     for (uint i = 0; i < candidateList.length; i++) {
       if (candidateList[i] == candidate) {
