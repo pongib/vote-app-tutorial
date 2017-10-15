@@ -145,4 +145,18 @@ contract Voting {
     }
     return false;
   }
+
+  /* All the ether sent by voters who purchased the tokens is in this
+   contract's account. This method will be used to transfer out all those ethers
+   in to another account. *** The way this function is written currently, anyone can call
+   this method and transfer the balance in to their account. In reality, you should add
+   check to make sure only the owner of this contract can cash out.
+  */
+
+  function transferTo(address account) {
+    account.transfer(this.balance);
+  }
+
+  
+
 }
