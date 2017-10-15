@@ -105,6 +105,16 @@ contract Voting {
 
     // Store how many tokens were used for this candidate
     voterInfo[msg.sender].tokensUsedPerCandidate[index] += votesInTokens;
+  }                      
+
+  // Return the sum of all the tokens used by this voter.
+  function totalTokensUsed(uint[] _tokensUsedPerCandidate) private constant returns (uint) {
+    uint totalUsedTokens = 0;
+    for (uint i = 0; i < _tokensUsedPerCandidate.length; i++) {
+      totalUsedTokens += _tokensUsedPerCandidate[i];
+    }
+
+    return totalUsedTokens;
   }
 
   function validCandidate(bytes32 candidate) returns (bool) {
