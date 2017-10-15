@@ -125,10 +125,15 @@ contract Voting {
     balanceTokens -= tokensToBuy;
     return tokensToBuy;
   }
-  
+
   // get token sold detail
   function tokenSold() constant returns (uint) {
     return totalTokens - balanceTokens;
+  }
+
+  // get voter detail
+  function voterDetails(address user) constant returns (uint, uint[]) {
+    return (voterInfo[user].tokensBought, voterInfo[user].tokensUsedPerCandidate);
   }
   
   // is valid candidate
