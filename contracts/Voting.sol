@@ -53,22 +53,6 @@ contract Voting {
     tokenPrice = pricePerToken;
   }
 
-  /* This function is used to purchase the tokens. Note the keyword 
-  'payable' below. By just adding that one keyword to a function, 
-  your contract can now accept Ether from anyone who calls this 
-  function. Accepting money can not get any easier than this!
-  */
-  
-  function buy() payable returns (uint) {
-    uint tokensToBuy = msg.value / tokenPrice;
-    if (tokensToBuy > balanceTokens) throw;
-    voterInfo[msg.sender].voterAddress = msg.sender;
-    voterInfo[msg.sender].tokensBought += tokensToBuy;
-    balanceTokens -= tokensToBuy;
-    return tokensToBuy;
-  }
-  
-
   // This function returns the total votes a candidate has received so far
   function totalVotesFor(bytes32 candidate) returns (uint8) {
     if (validCandidate(candidate) == false) throw;
@@ -127,6 +111,26 @@ contract Voting {
     return uint(-1);
   }
 
+  /* This function is used to purchase the tokens. Note the keyword 
+  'payable' below. By just adding that one keyword to a function, 
+  your contract can now accept Ether from anyone who calls this 
+  function. Accepting money can not get any easier than this!
+  */
+  
+  function buy() payable returns (uint) {
+    uint tokensToBuy = msg.value / tokenPrice;
+    if (tokensToBuy > balanceTokens) throw;
+    voterInfo[msg.sender].voterAddress = msg.sender;
+    voterInfo[msg.sender].tokensBought += tokensToBuy;
+    balanceTokens -= tokensToBuy;
+    return tokensToBuy;
+  }
+  
+  // get token sold detail
+  function tokenSold() constant returns (uint) {
+    return totalTokens - balanceTokens;
+  }
+  
   // is valid candidate
   function validCandidate(bytes32 candidate) returns (bool) {
     for (uint i = 0; i < candidateList.length; i++) {
